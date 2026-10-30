@@ -1,0 +1,12 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { indexable, site } from '../data/site';
+import '../styles/global.css';
+interface Props { title: string; description: string; }
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const schema = { '@context': 'https://schema.org', '@type': 'Organization', name: site.name, url: Astro.site?.href, telephone: '+1-714-534-0070', email: site.email, sameAs: [site.facebook] };
+---
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>{title}</title><meta name="description" content={description} /><meta name="robots" content={indexable ? 'index, follow' : 'noindex, nofollow'} /><link rel="canonical" href={canonical} /><meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:url" content={canonical} /><meta property="og:site_name" content={site.name} /><meta property="og:locale" content="en_US" /><meta property="og:image" content={new URL('/images/tss-logo.webp', Astro.site).href} /><meta name="theme-color" content="#4B5D2A" /><link rel="icon" type="image/webp" href="/images/tss-logo.webp" /><link rel="preload" as="font" type="font/woff2" href="/fonts/manrope-latin.woff2" crossorigin /><link rel="preload" as="font" type="font/woff2" href="/fonts/source-sans-3-latin.woff2" crossorigin /><script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\u003c')} /></head><body><Header /><main id="main-content" tabindex="-1"><slot /></main><Footer /></body></html>

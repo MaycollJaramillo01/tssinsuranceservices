@@ -1,0 +1,5 @@
+---
+import { services } from '../data/services';
+import ServiceCard from './ServiceCard.astro';
+---
+<section class="section services-section" id="services" aria-labelledby="services-heading"><div class="container"><div class="section-heading"><h2 id="services-heading">How can we help?</h2><p>Choose a service to see how our team can assist.</p></div><div class="services-grid">{services.map(service => <ServiceCard service={service} />)}</div></div></section>

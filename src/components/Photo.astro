@@ -1,0 +1,10 @@
+---
+interface Props { name: string; alt: string; portrait?: boolean; priority?: boolean; class?: string; sizes?: string; }
+const { name, alt, portrait = true, priority = false, class: className, sizes = '(min-width: 1024px) 380px, (min-width: 768px) 45vw, calc(100vw - 40px)' } = Astro.props;
+const widths = portrait ? [320, 480, 768] : [480, 768, 1200];
+const source = (format: string) => widths.map(w => `/images/${name}-${w}.${format} ${w}w`).join(', ');
+---
+<picture class:list={['photo', className, { 'photo--portrait': portrait }]}>
+  <source type="image/avif" srcset={source('avif')} sizes={sizes} />
+  <img src={`/images/${name}-${widths[1]}.webp`} srcset={source('webp')} sizes={sizes} alt={alt} width={portrait ? 768 : 1200} height={portrait ? 960 : 800} loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : 'auto'} decoding="async" />
+</picture>

@@ -1,0 +1,235 @@
+{
+  "pages": [
+    {
+      "path": "/",
+      "status": 200,
+      "h1": 1,
+      "noindex": true
+    },
+    {
+      "path": "/insurance/",
+      "status": 200,
+      "h1": 1,
+      "noindex": true
+    },
+    {
+      "path": "/income-tax/",
+      "status": 200,
+      "h1": 1,
+      "noindex": true
+    },
+    {
+      "path": "/dmv-services/",
+      "status": 200,
+      "h1": 1,
+      "noindex": true
+    },
+    {
+      "path": "/real-estate-mortgage/",
+      "status": 200,
+      "h1": 1,
+      "noindex": true
+    },
+    {
+      "path": "/business-formation/",
+      "status": 200,
+      "h1": 1,
+      "noindex": true
+    },
+    {
+      "path": "/our-team/",
+      "status": 200,
+      "h1": 1,
+      "noindex": true
+    },
+    {
+      "path": "/contact/",
+      "status": 200,
+      "h1": 1,
+      "noindex": true
+    }
+  ],
+  "redirects": [
+    {
+      "from": "/insurance-2",
+      "to": "/insurance/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/insurance-2/",
+      "to": "/insurance/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/income-tax-2",
+      "to": "/income-tax/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/income-tax-2/",
+      "to": "/income-tax/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/contact-8",
+      "to": "/contact/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/contact-8/",
+      "to": "/contact/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/insurance",
+      "to": "/insurance/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/income-tax",
+      "to": "/income-tax/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/dmv-services",
+      "to": "/dmv-services/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/real-estate-mortgage",
+      "to": "/real-estate-mortgage/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/business-formation",
+      "to": "/business-formation/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/our-team",
+      "to": "/our-team/",
+      "status": 301,
+      "hops": 1
+    },
+    {
+      "from": "/contact",
+      "to": "/contact/",
+      "status": 301,
+      "hops": 1
+    }
+  ],
+  "contrast": [
+    {
+      "text": "brand",
+      "background": "background",
+      "ratio": 6.93
+    },
+    {
+      "text": "brand",
+      "background": "surface",
+      "ratio": 7.25
+    },
+    {
+      "text": "brand",
+      "background": "surfaceMuted",
+      "ratio": 6.42
+    },
+    {
+      "text": "brandHover",
+      "background": "background",
+      "ratio": 10.33
+    },
+    {
+      "text": "brandHover",
+      "background": "surface",
+      "ratio": 10.8
+    },
+    {
+      "text": "brandHover",
+      "background": "surfaceMuted",
+      "ratio": 9.56
+    },
+    {
+      "text": "heading",
+      "background": "background",
+      "ratio": 14.94
+    },
+    {
+      "text": "heading",
+      "background": "surface",
+      "ratio": 15.63
+    },
+    {
+      "text": "heading",
+      "background": "surfaceMuted",
+      "ratio": 13.84
+    },
+    {
+      "text": "body",
+      "background": "background",
+      "ratio": 9.06
+    },
+    {
+      "text": "body",
+      "background": "surface",
+      "ratio": 9.47
+    },
+    {
+      "text": "body",
+      "background": "surfaceMuted",
+      "ratio": 8.39
+    },
+    {
+      "text": "muted",
+      "background": "background",
+      "ratio": 5.32
+    },
+    {
+      "text": "muted",
+      "background": "surface",
+      "ratio": 5.57
+    },
+    {
+      "text": "muted",
+      "background": "surfaceMuted",
+      "ratio": 4.93
+    },
+    {
+      "text": "error",
+      "background": "background",
+      "ratio": 6.29
+    },
+    {
+      "text": "error",
+      "background": "surface",
+      "ratio": 6.57
+    },
+    {
+      "text": "error",
+      "background": "surfaceMuted",
+      "ratio": 5.82
+    },
+    {
+      "text": "white",
+      "background": "brand",
+      "ratio": 7.25
+    },
+    {
+      "text": "white",
+      "background": "brandHover",
+      "ratio": 10.8
+    }
+  ],
+  "internalResources": 20
+}

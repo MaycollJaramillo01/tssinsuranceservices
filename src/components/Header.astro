@@ -1,0 +1,60 @@
+---
+import Icon from './Icon.astro';
+import { services } from '../data/services';
+import { site } from '../data/site';
+import logo from '../generated/logo.json';
+const current = Astro.url.pathname;
+---
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="site-header">
+  <div class="topbar"><div class="container topbar__inner"><span>Mon–Fri 10:30 AM–7 PM · Sat 10:30 AM–3 PM</span><a href={site.phoneHref}><Icon name="phone" size={16} />{site.phone}</a></div></div>
+  <div class="container header__inner">
+    <a class="brand" href="/" aria-label="TSS Insurance Services home"><img src="/images/tss-logo.webp" width={logo.width} height={logo.height} alt="TSS Insurance Services. Auto, home and commercial." /></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation"><span>Menu</span><Icon name="menu-2" /></button>
+    <nav id="primary-navigation" class="navigation" aria-label="Main navigation">
+      <a href="/" aria-current={current === '/' ? 'page' : undefined}>Home</a>
+      <div class="services-nav">
+        <button id="services-toggle" type="button" aria-expanded="false" aria-controls="services-menu" class:list={['nav-button', { active: services.some(s => current === `/${s.slug}/`) }]}>Services<Icon name="chevron-down" size={16} /></button>
+        <ul id="services-menu" class="services-menu" hidden>{services.map(s => <li><a href={`/${s.slug}/`} aria-current={current === `/${s.slug}/` ? 'page' : undefined}><Icon name={s.icon} />{s.name}</a></li>)}</ul>
+      </div>
+      <a href="/our-team/" aria-current={current === '/our-team/' ? 'page' : undefined}>Our Team</a>
+      <a href="/contact/" aria-current={current === '/contact/' ? 'page' : undefined}>Contact</a>
+      <a class="button button--primary header-cta" href="/contact/">Request Information<Icon name="arrow-up-right" size={18} /></a>
+    </nav>
+  </div>
+</header>
+<script>
+  const nav = document.querySelector<HTMLElement>('#primary-navigation')!;
+  const mobile = document.querySelector<HTMLButtonElement>('.menu-toggle')!;
+  const servicesToggle = document.querySelector<HTMLButtonElement>('#services-toggle')!;
+  const servicesMenu = document.querySelector<HTMLElement>('#services-menu')!;
+  function closeServices() { servicesToggle.setAttribute('aria-expanded', 'false'); servicesMenu.hidden = true; }
+  function closeMobile() { mobile.setAttribute('aria-expanded', 'false'); nav.classList.remove('is-open'); closeServices(); }
+  mobile.addEventListener('click', () => {
+    const open = mobile.getAttribute('aria-expanded') !== 'true';
+    mobile.setAttribute('aria-expanded', String(open)); nav.classList.toggle('is-open', open);
+    if (!open) closeServices();
+  });
+  servicesToggle.addEventListener('click', () => {
+    const open = servicesMenu.hidden;
+    servicesMenu.hidden = !open; servicesToggle.setAttribute('aria-expanded', String(open));
+  });
+  servicesToggle.addEventListener('keydown', event => {
+    if (event.key === 'ArrowDown') { event.preventDefault(); servicesMenu.hidden = false; servicesToggle.setAttribute('aria-expanded', 'true'); servicesMenu.querySelector('a')?.focus(); }
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      if (!servicesMenu.hidden) { closeServices(); servicesToggle.focus(); }
+      else if (mobile.getAttribute('aria-expanded') === 'true') { closeMobile(); mobile.focus(); }
+    }
+  });
+  document.addEventListener('click', event => {
+    if (!(event.target as HTMLElement).closest('.services-nav')) closeServices();
+    if (!(event.target as HTMLElement).closest('.header__inner')) closeMobile();
+  });
+  nav.addEventListener('focusout', event => { if (!nav.contains(event.relatedTarget as Node)) closeMobile(); });
+  document.querySelector('.services-nav')?.addEventListener('focusout', event => {
+    if (!(event.currentTarget as HTMLElement).contains((event as FocusEvent).relatedTarget as Node)) closeServices();
+  });
+  matchMedia('(min-width: 1024px)').addEventListener('change', closeMobile);
+</script>

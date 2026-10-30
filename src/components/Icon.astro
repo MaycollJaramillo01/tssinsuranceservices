@@ -1,0 +1,8 @@
+---
+import icons from '../generated/icons.json';
+interface Props { name: string; size?: number; class?: string; }
+const { name, size = 20, class: className } = Astro.props;
+const content = icons[name as keyof typeof icons];
+if (!content) throw new Error(`Unknown Tabler icon: ${name}`);
+---
+<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class={className} aria-hidden="true" focusable="false"><Fragment set:html={content} /></svg>

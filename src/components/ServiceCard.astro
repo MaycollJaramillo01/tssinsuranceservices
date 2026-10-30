@@ -1,0 +1,7 @@
+---
+import type { Service } from '../data/services';
+import Icon from './Icon.astro';
+interface Props { service: Service; }
+const { service } = Astro.props;
+---
+<article class="service-card"><Icon name={service.icon} size={28} /><h3>{service.name}</h3><p>{service.short}</p><a class="text-link" href={`/${service.slug}/`}>{service.linkLabel}<Icon name="arrow-up-right" /></a></article>

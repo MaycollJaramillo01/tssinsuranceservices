@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import InsuranceBrands from '../components/InsuranceBrands.astro';
+import { services, type Service } from '../data/services';
+import { site } from '../data/site';
+export function getStaticPaths() { return services.map(service => ({ params: { service: service.slug }, props: { service } })); }
+interface Props { service: Service; }
+const { service } = Astro.props;
+const related = services.filter(s => service.related.includes(s.slug));
+---
+<Layout title={`${service.name} | TSS Insurance Services`} description={service.meta}>
+  <div class="container"><Breadcrumb label={service.name} service /></div>
+  <section class="service-hero"><div class="container service-hero-grid"><div><p class="eyebrow">TSS services</p><h1 class="service-title">{service.name}</h1><p class="intro">{service.intro}</p><a class="button button--primary" href={`/contact/?service=${service.slug}`}>{service.cta}<Icon name="arrow-up-right" /></a></div>{service.image ? <Photo name={service.image} alt={service.alt!} portrait={false} priority sizes="(min-width: 1024px) 480px, (min-width: 768px) 45vw, calc(100vw - 40px)" /> : <div class="service-overview"><Icon name={service.icon} size={28} /><p class="eyebrow">How we can help</p><ul>{service.items.map(item => <li>{item}</li>)}</ul></div>}</div></section>
+  <section class="section service-content"><div class="container service-content-grid">{service.image ? <div><h2>Services available</h2><ul class="service-list">{service.items.map(item => <li><Icon name="check" />{item}</li>)}</ul></div> : <div><h2>Talk with our team</h2><p>Have a question about {service.name.toLowerCase()}? Call our office or send a general inquiry.</p><a class="text-link" href={site.phoneHref}><Icon name="phone" />{site.phone}</a></div>}<div><h2>{service.detailTitle}</h2>{service.details.map(detail => <p>{detail}</p>)}</div></div></section>
+  {service.slug === 'insurance' && <InsuranceBrands />}
+  <section class="service-cta"><div class="container service-cta-inner"><div><p class="eyebrow">Your next step</p><h2>Let’s talk about {service.slug === 'income-tax' ? 'your taxes' : service.slug === 'business-formation' ? 'your business' : service.slug === 'real-estate-mortgage' ? 'your plans' : 'what you need'}.</h2></div><a class="button button--light" href={`/contact/?service=${service.slug}`}>{service.cta}<Icon name="arrow-up-right" /></a></div></section>
+  <section class="section"><div class="container"><div class="section-heading"><h2>You may also need</h2><p>Explore more services from TSS.</p></div><div class="related-grid">{related.map(service => <ServiceCard service={service} />)}</div></div></section>
+</Layout>

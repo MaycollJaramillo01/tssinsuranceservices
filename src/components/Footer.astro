@@ -1,0 +1,15 @@
+---
+import { site } from '../data/site';
+import { services } from '../data/services';
+import Icon from './Icon.astro';
+import logo from '../generated/logo.json';
+---
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand"><a href="/" aria-label="TSS Insurance Services home"><img src="/images/tss-logo.webp" width={logo.width} height={logo.height} alt="TSS Insurance Services" loading="lazy" /></a><p>Insurance, taxes and business services.<br />All in one place.</p><a class="social-link" href={site.facebook}><Icon name="brand-facebook" />Facebook<Icon name="arrow-up-right" size={16} /></a></div>
+    <div><p class="footer-label">Our services</p><ul>{services.map(s => <li><a href={`/${s.slug}/`}>{s.name}</a></li>)}</ul></div>
+    <div><p class="footer-label">Get in touch</p><a class="footer-phone" href={site.phoneHref}>{site.phone}</a><a class="footer-email" href={`mailto:${site.email}`}>{site.email}</a><p class="footer-fax">Fax: {site.fax}</p><dl class="footer-hours">{site.hours.map(h => <div><dt>{h.day}</dt><dd>{h.time}</dd></div>)}</dl></div>
+  </div>
+  <div class="container footer-bottom"><span>© <span data-year>{new Date().getFullYear()}</span> {site.name}. All rights reserved.</span><div><a href="/our-team/">Our Team</a><a href="/contact/">Contact</a></div></div>
+</footer>
+<script>document.querySelectorAll('[data-year]').forEach(el => { el.textContent = String(new Date().getFullYear()); });</script>

@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Team from '../components/Team.astro';
+import Icon from '../components/Icon.astro';
+---
+<Layout title="Our Team | TSS Insurance Services" description="Meet Christian Tolossa, Cruz Garcia and German Abril, the people behind TSS Insurance Services and its personal and business services."><div class="container"><Breadcrumb label="Our Team" /></div><section class="page-intro"><div class="container"><p class="eyebrow">The people at TSS</p><h1 class="service-title">Meet the people behind TSS</h1><p class="intro">People to speak with about insurance, taxes, DMV services, real estate, mortgages and business formation. Get to know our team and the experience each person brings.</p></div></section><Team heading={false} /><section class="section"><div class="container team-contact"><div><h2>Have something in mind?</h2><p>Tell our team which service you would like to discuss.</p></div><a class="button button--primary" href="/contact/">Request Information<Icon name="arrow-up-right" /></a></div></section></Layout>

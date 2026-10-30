@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import Services from '../components/Services.astro';
+import Team from '../components/Team.astro';
+import FAQ from '../components/FAQ.astro';
+import Contact from '../components/Contact.astro';
+import { site } from '../data/site';
+---
+<Layout title="Insurance, Tax & Business Services | TSS Insurance Services" description="Explore insurance, tax preparation, DMV services, real estate and mortgage assistance, and business formation support at TSS. Call 714-534-0070.">
+  <section class="hero"><div class="container hero-grid"><div class="hero-copy"><p class="eyebrow">TSS Insurance Services</p><h1>Insurance, taxes and business services. <span>All in one place.</span></h1><p class="intro">Explore auto, home and commercial insurance, tax preparation, DMV services, real estate and mortgage assistance, and business formation support.</p><div class="hero-actions"><a class="button button--primary" href="#services">Explore Our Services<Icon name="arrow-right" /></a><a class="button button--secondary" href={site.phoneHref}>Call {site.phone}</a></div></div><figure class="hero-portrait"><Photo name="christian-tolossa" alt="Christian Tolossa, owner of TSS Insurance Services, at his office desk" priority /><figcaption>Christian Tolossa <span>· Owner</span></figcaption></figure></div></section>
+  <Services /><Team /><FAQ /><Contact />
+</Layout>

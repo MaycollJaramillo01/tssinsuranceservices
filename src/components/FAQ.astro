@@ -1,0 +1,5 @@
+---
+import { faqs } from '../data/faqs';
+import Icon from './Icon.astro';
+---
+<section class="section faq-section" aria-labelledby="faq-heading"><div class="container faq-layout"><div><h2 id="faq-heading">Frequently asked questions</h2><p>Have another question?<br /><a href="/contact/">Get in touch with our team.</a></p></div><div class="faq-list">{faqs.map(faq => <details><summary>{faq.question}<Icon name="plus" /></summary><p>{faq.answer}</p></details>)}</div></div></section>

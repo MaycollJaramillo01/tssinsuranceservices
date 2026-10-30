@@ -1,0 +1,70 @@
+---
+import { site } from '../data/site';
+import { serviceOptions } from '../data/services';
+import Icon from './Icon.astro';
+interface Props { page?: boolean; }
+const { page = false } = Astro.props;
+---
+<section class:list={['section contact-section', { 'contact-section--page': page }]} id="contact" aria-labelledby="contact-heading"><div class="container">
+  <div class="section-heading"><p class="eyebrow">Let’s talk</p>{page ? <h1 id="contact-heading" class="service-title">Tell us what you need help with</h1> : <h2 id="contact-heading">Tell us what you need help with</h2>}<p>Choose your service. Start a conversation with our team.</p></div>
+  <div class="contact-layout"><div class="contact-details">
+    <div class="contact-item"><Icon name="phone" /><div><p class="contact-label">Call our office</p><a class="contact-phone" href={site.phoneHref}>{site.phone}</a><p class="small muted">Fax: {site.fax}</p></div></div>
+    <div class="contact-item"><Icon name="mail" /><div><p class="contact-label">Email us</p><a class="email-link" href={`mailto:${site.email}`}>{site.email}</a></div></div>
+    <div class="contact-item"><Icon name="clock" /><div><p class="contact-label">Office hours</p><dl class="office-hours">{site.hours.map(h => <div><dt>{h.day}</dt><dd>{h.time}</dd></div>)}</dl></div></div>
+  </div>
+  <div class="inquiry-panel">
+    <div data-form-unavailable class="form-unavailable"><h3>Let’s start a conversation</h3><p>For information about any of our services, please call or email our team.</p><a class="button button--primary" href={site.phoneHref}><Icon name="phone" />Call {site.phone}</a><a class="button button--secondary" href={`mailto:${site.email}`}><Icon name="mail" />Email Our Team</a><p class="small muted">Please keep tax documents, Social Security numbers and banking details out of general inquiries.</p></div>
+    <form id="inquiry-form" action="/api/inquiry" method="post" hidden novalidate>
+      <p class="form-intro">Fields marked with an asterisk (*) are required.</p>
+      <div class="form-grid"><div class="field"><label for="firstName">First name *</label><input id="firstName" name="firstName" autocomplete="given-name" maxlength="100" required aria-describedby="firstName-error" /><p class="field-error" id="firstName-error"></p></div><div class="field"><label for="lastName">Last name <span>(optional)</span></label><input id="lastName" name="lastName" autocomplete="family-name" maxlength="100" aria-describedby="lastName-error" /><p class="field-error" id="lastName-error"></p></div></div>
+      <div class="form-grid"><div class="field"><label for="email">Email *</label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="email-error" /><p class="field-error" id="email-error"></p></div><div class="field"><label for="phone">Phone <span>(optional)</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40" aria-describedby="phone-error" /><p class="field-error" id="phone-error"></p></div></div>
+      <div class="field"><label for="service">Service *</label><select id="service" name="service" required aria-describedby="service-error"><option value="">Choose a service</option>{serviceOptions.map(s => <option value={s.value}>{s.label}</option>)}</select><p class="field-error" id="service-error"></p></div>
+      <div class="field"><label for="message">Message *</label><textarea id="message" name="message" rows="5" maxlength="2000" required aria-describedby="message-help message-error"></textarea><div class="message-help"><p id="message-help">Please do not include Social Security numbers, tax documents or banking details.</p><span data-message-count>0 / 2000</span></div><p class="field-error" id="message-error"></p></div>
+      <div class="honeypot" aria-hidden="true"><label for="companyWebsite">Leave this field empty</label><input id="companyWebsite" name="companyWebsite" type="text" tabindex="-1" autocomplete="off" /></div>
+      <p class="form-status" id="form-status" role="status" aria-live="polite" tabindex="-1"></p><button class="button button--primary form-submit" type="submit">Send Inquiry<Icon name="arrow-up-right" /></button>
+    </form>
+    <noscript><p class="small">Please call or email our team to send an inquiry.</p></noscript>
+  </div></div></div></section>
+<script>
+  import { validateInquiry, fields, failureMessage, successMessage } from '../lib/validation';
+  const form = document.querySelector<HTMLFormElement>('#inquiry-form');
+  if (form) {
+    const service = form.querySelector<HTMLSelectElement>('#service')!;
+    const selected = new URLSearchParams(location.search).get('service');
+    if (selected && [...service.options].some(o => o.value === selected)) service.value = selected;
+    const message = form.querySelector<HTMLTextAreaElement>('#message')!;
+    const status = form.querySelector<HTMLElement>('#form-status')!;
+    const submit = form.querySelector<HTMLButtonElement>('[type="submit"]')!;
+    const errorStatus = () => { status.textContent = failureMessage; status.classList.add('is-error'); status.focus(); };
+    let token = '';
+    const freshConfig = async () => {
+      const response = await fetch('/api/inquiry-config', { cache: 'no-store' });
+      if (!response.ok) return false;
+      const config = await response.json();
+      if (config.enabled === true && typeof config.token === 'string') { token = config.token; return true; }
+      return false;
+    };
+    freshConfig().then(enabled => { if (enabled) { form.hidden = false; document.querySelector<HTMLElement>('[data-form-unavailable]')!.hidden = true; } }).catch(() => {});
+    message.addEventListener('input', () => { form.querySelector('[data-message-count]')!.textContent = `${message.value.length} / 2000`; });
+    fields.forEach(field => form.querySelector(`#${field}`)?.addEventListener('input', () => {
+      const control = form.querySelector<HTMLInputElement>(`#${field}`)!;
+      control.removeAttribute('aria-invalid'); form.querySelector(`#${field}-error`)!.textContent = '';
+    }));
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      const input = Object.fromEntries(new FormData(form));
+      const validation = validateInquiry(input);
+      fields.forEach(field => { const error = validation.errors[field]; form.querySelector(`#${field}-error`)!.textContent = error || ''; form.querySelector(`#${field}`)?.setAttribute('aria-invalid', String(!!error)); });
+      status.textContent = ''; status.classList.remove('is-error');
+      if (!validation.valid) { form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus(); return; }
+      submit.disabled = true; submit.textContent = 'Sending…'; form.setAttribute('aria-busy', 'true');
+      try {
+        const response = await fetch('/api/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...input, token }), signal: AbortSignal.timeout(20000) });
+        const result = await response.json();
+        if (response.ok && result.ok === true) { status.textContent = successMessage; form.reset(); form.querySelector('[data-message-count]')!.textContent = '0 / 2000'; status.focus(); await freshConfig().catch(() => false); }
+        else { if (result.errors) { fields.forEach(field => { if (result.errors[field]) { form.querySelector(`#${field}-error`)!.textContent = result.errors[field]; form.querySelector(`#${field}`)?.setAttribute('aria-invalid', 'true'); } }); } errorStatus(); if (response.status === 403) await freshConfig().catch(() => false); }
+      } catch { errorStatus(); /* Preserve values and token for an idempotent retry after network failure. */ }
+      finally { submit.disabled = false; submit.innerHTML = 'Send Inquiry'; form.removeAttribute('aria-busy'); }
+    });
+  }
+</script>

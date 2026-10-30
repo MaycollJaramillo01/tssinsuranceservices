@@ -1,0 +1,4 @@
+---
+import { site } from '../data/site';
+---
+{site.showInsuranceBrands && site.insuranceBrands.length > 0 && <section class="section" aria-label="Insurance brands"><div class="container insurance-brands">{site.insuranceBrands.map(brand => <img src={brand.image} alt={brand.name} loading="lazy" width="180" height="100" />)}</div></section>}
