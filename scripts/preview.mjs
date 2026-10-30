@@ -1,8 +1,8 @@
 import http from 'node:http';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
-import { loadEnv } from 'vite';
-const env = { ...loadEnv('production', process.cwd(), ''), ...process.env };
+import { loadEnvironment } from './environment.mjs';
+const env = loadEnvironment();
 const worker = (await import(pathToFileURL(resolve('dist/server/index.js')).href)).default;
 const server = http.createServer(async (incoming, outgoing) => {
   try {

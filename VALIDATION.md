@@ -32,3 +32,11 @@ Capturas: `qa/home-1440.jpg` y `qa/home-375.jpg`. Las capturas y reportes están
 - La revisión de teclado, semántica y contraste realizada no constituye una auditoría completa con lectores de pantalla.
 
 Los pendientes editoriales y la preparación del lanzamiento se registran en `CONTENT_REVIEW.md`.
+
+## Corrección de despliegue en Vercel
+
+El error del primer despliegue provenía de importar `vite` directamente sin declararlo como dependencia. La configuración y el preview ahora cargan `.env` mediante las API nativas de Node. Se añadió `vercel.json` para seleccionar `build/client`, los redirects 301 y las funciones Node de consulta; `npm run build` conserva el paquete Worker original. Node queda fijado a la rama 24.x.
+
+Se ejecutó `npm ci --install-strategy=nested` en una copia limpia sin `node_modules` ni archivos de entorno locales. Se comprobó que `node_modules/vite` **no existe en la raíz**. En esa instalación pasaron `npm run build:client`, `npm run check` y las 12 pruebas, incluidas las funciones Vercel y el uso de su IP de proxy frente a una cabecera Cloudflare falsificada. También pasó el build completo del Worker original.
+
+Estas pruebas verifican la corrección local y no equivalen, por sí solas, a la confirmación del despliegue remoto ni a entrega real de correo.

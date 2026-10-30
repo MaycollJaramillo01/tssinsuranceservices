@@ -4,12 +4,13 @@
   "private": true,
   "type": "module",
   "packageManager": "npm@10.9.3",
-  "engines": { "node": ">=22.23.4" },
+  "engines": { "node": "24.x" },
   "scripts": {
     "assets": "node scripts/prepare-assets.mjs",
     "dev": "astro dev --host 127.0.0.1",
     "check": "astro check && tsc --project tsconfig.server.json --noEmit",
-    "build": "npm run assets && astro build && node scripts/build-worker.mjs",
+    "build:client": "npm run assets && astro build",
+    "build": "npm run build:client && node scripts/build-worker.mjs",
     "preview": "node scripts/preview.mjs",
     "test": "node --import tsx --test tests/*.test.ts",
     "verify": "node --import tsx scripts/verify-build.mjs"
