@@ -16,6 +16,7 @@
     "verify": "node --import tsx scripts/verify-build.mjs"
   },
   "dependencies": {
+    "@vercel/functions": "^3.10.5",
     "astro": "^7.4.4"
   },
   "devDependencies": {

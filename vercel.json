@@ -3,6 +3,10 @@
   "framework": "astro",
   "buildCommand": "npm run build:client",
   "outputDirectory": "build/client",
+  "proxy": {
+    "entrypoint": "middleware.ts",
+    "matcher": "/((?!_astro/|images/|fonts/|licenses/|_vercel/|\\.well-known/|maintenance\\.css|robots\\.txt|sitemap.*\\.xml).*)"
+  },
   "functions": { "api/*.ts": { "maxDuration": 30 } },
   "redirects": [
     { "source": "/insurance-2", "destination": "/insurance/", "statusCode": 301 },

@@ -1,0 +1,20 @@
+@font-face{font-family:Manrope;src:url('/fonts/manrope-latin.woff2') format('woff2');font-weight:500 700;font-style:normal;font-display:swap}
+@font-face{font-family:'Source Sans 3';src:url('/fonts/source-sans-3-latin.woff2') format('woff2');font-weight:400 600;font-style:normal;font-display:swap}
+:root{--brand:#4B5D2A;--brand-hover:#34421E;--bg:#FAFAF7;--surface:#FFFFFF;--muted:#F0F2EA;--heading:#20251D;--body:#41483C;--muted-text:#626B5B;--border:#DDE2D5;--font-heading:Manrope,Arial,sans-serif;--font-body:'Source Sans 3',Arial,sans-serif}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100dvh;display:grid;place-items:center;padding:24px;background:var(--bg);color:var(--body);font-family:var(--font-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.card{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;text-align:center}
+.rule{height:6px;background:var(--brand)}
+.inner{padding:48px 32px 40px}
+.wordmark{font-family:var(--font-heading);font-weight:700;font-size:20px;letter-spacing:-.03em;color:var(--heading);text-decoration:none}
+.wordmark .rest{color:var(--brand)}
+.eyebrow{margin:32px 0 12px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+h1{margin:0;color:var(--heading);font-family:var(--font-heading);font-weight:600;font-size:32px;line-height:1.12;letter-spacing:-.03em}
+p{margin:16px auto 0;max-width:44ch;color:var(--body)}
+.actions{margin-top:32px;display:flex;flex-direction:column;gap:12px;align-items:stretch}
+a.button{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:48px;padding:14px 24px;border-radius:6px;border:1px solid var(--brand);background:var(--brand);color:#fff;font-weight:600;text-decoration:none}
+a.button:hover{background:var(--brand-hover);border-color:var(--brand-hover)}
+a.button.secondary{background:transparent;color:var(--brand)}
+a.button.secondary:hover{background:var(--muted);border-color:var(--brand-hover);color:var(--brand-hover)}
+.note{margin-top:28px;font-size:14px;color:var(--muted-text)}
+@media(min-width:560px){h1{font-size:38px}.actions{flex-direction:row}.actions a.button{flex:1}}
