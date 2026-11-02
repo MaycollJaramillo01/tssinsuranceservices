@@ -1,8 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "astro",
+  "framework": null,
   "buildCommand": "npm run build:client",
   "outputDirectory": "build/client",
+  "trailingSlash": true,
   "proxy": {
     "entrypoint": "middleware.ts",
     "matcher": "/((?!_astro/|images/|fonts/|licenses/|_vercel/|\\.well-known/|maintenance\\.css|robots\\.txt|sitemap.*\\.xml).*)"
